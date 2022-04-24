@@ -133,7 +133,7 @@ def get_motif_properties(graph: Graph, motif_vertices_indices: List[int],
     return motif_edge_properties, motif_vertex_properties
 
 
-ssd_dir_path = f'scratch/yishaiaz@auth.ad.bgu.ac.il/{cluster_job_id}'
+ssd_dir_path = f'/scratch/yishaiaz@auth.ad.bgu.ac.il/{cluster_job_id}'
 
 ssd_path_to_graph_gt = os.path.join(ssd_dir_path, 'data_graph.gt')
 if os.path.isfile(ssd_path_to_graph_gt):
