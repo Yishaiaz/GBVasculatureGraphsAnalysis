@@ -20,7 +20,7 @@ LOCAL_RESULTS_PATH = '~/MOTIF_DISTRIBUTIONS_RESULTS'
 os.makedirs(LOGS_DIR_PATH, exist_ok=True)
 os.makedirs(LOCAL_RESULTS_PATH, exist_ok=True)
 
-LOG_file_PATH = os.path.join(LOGS_DIR_PATH, f'log_{datetime.datetime.now().strftime("%d/%m/%Y_%H:%M:%S")}.txt')
+LOG_file_PATH = os.path.join(LOGS_DIR_PATH, f'log_{datetime.datetime.now().strftime("%d|%m|%Y_%H|%M|%S")}.txt')
 log_text = f'LogEntry: {datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}\n'
 with open(LOG_file_PATH, 'a') as f:
     f.write(log_text)
