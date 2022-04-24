@@ -25,14 +25,14 @@ echo -e "SLURM_JOB_NODELIST:\t" $SLURM_JOB_NODELIST "\n\n"
 ### Start your code below ####
 #SSD
 export SLURM_SCRATCH_DIR=/scratch/${SLURM_JOB_USER}/${SLURM_JOBID}
-cp ~/BrainVasculatureGraphData/*.gt $SLURM_SCRATCH_DIR
+cp ~/GBVasculatureGraphsAnalysis/BrainVasculatureGraphData/*.gt $SLURM_SCRATCH_DIR
 echo $SLURM_SCRATCH_DIR
 #/SSD
 module load anaconda				### load anaconda module (must be present when working with conda environments)
 source activate BrainVasculatureGraphAnalysis				### activate a conda environment, replace my_env with your conda environment
 export SCRIPT_NAME=MotifsDistributions.py
 echo "started with ${SCRIPT_NAME} python script"
-python py_scripts/ExplorationScripts/${SCRIPT_NAME} --job_id ${SLURM_JOBID}    				### execute python script
+python ~/GBVasculatureGraphsAnalysis/MotifsExplortationCode/PythonScripts/${SCRIPT_NAME} --job_id ${SLURM_JOBID}    				### execute python script
 echo "done with ${SCRIPT_NAME} python script"
 #SSD
 cp -r $SLURM_SCRATCH_DIR $SLURM_SUBMIT_DIR

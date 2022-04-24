@@ -15,6 +15,15 @@ from tqdm import tqdm, tqdm_notebook
 import itertools
 import argparse
 
+LOGS_DIR_PATH = '~/LOGS'
+LOCAL_RESULTS_PATH = '~/MOTIF_DISTRIBUTIONS_RESULTS'
+os.makedirs(LOGS_DIR_PATH, exist_ok=True)
+os.makedirs(LOCAL_RESULTS_PATH, exist_ok=True)
+
+LOG_file_PATH = os.path.join(LOGS_DIR_PATH, f'log_{datetime.datetime.now().strftime("%d/%m/%Y_%H:%M:%S")}.txt')
+log_text = f'LogEntry: {datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
 
 parser = argparse.ArgumentParser(prog='MotifDistributionAnalyzer', description='')
 parser.add_argument('--job_id', type=str,
@@ -23,8 +32,10 @@ parser.add_argument('--job_id', type=str,
 args = parser.parse_args()
 
 cluster_job_id = args.job_id
-print(f"Job-ID recieved: {cluster_job_id}")
 
+log_text = f"Job-ID received: {cluster_job_id}\n"
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
 
 def euclidean(p1: Tuple[int, ...], p2: Tuple[int, ...]) -> float:
     return math.sqrt(reduce(lambda prev, c: prev + (c[0] - c[1]) ** 2, zip(p1, p2), 0))
@@ -120,36 +131,71 @@ def get_motif_properties(graph: Graph, motif_vertices_indices: List[int],
     # todo: define spatial motifs definition as a tolerance based definition.
     return motif_edge_properties, motif_vertex_properties
 
-ssd_dir_path = f'/scratch/yishaiaz@auth.ad.bgu.ac.il/{cluster_job_id}'
+
+ssd_dir_path = f'~/scratch/yishaiaz@auth.ad.bgu.ac.il/{cluster_job_id}'
 
 ssd_path_to_graph_gt = os.path.join(ssd_dir_path, 'data_graph.gt')
-print('Started loading graph from SSD')
+if os.path.isfile(ssd_path_to_graph_gt):
+    log_text = f'found file in ssd at {ssd_path_to_graph_gt}\n'
+    with open(LOG_file_PATH, 'a') as f:
+        f.write(log_text)
+else:
+    log_text = f'DID NOT find file in ssd at {ssd_path_to_graph_gt}\n'
+    with open(LOG_file_PATH, 'a') as f:
+        f.write(log_text)
+
+
+log_text = f'Started loading graph from SSD\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
+
 _start = datetime.datetime.now()
 g = load_graph(ssd_path_to_graph_gt)
 _end = datetime.datetime.now()
 t = _end - _start
-print(f"Finished reading the graph in {int(t.total_seconds())} seconds")
-print(f"Finished reading the graph in {int(t.total_seconds()/60)} minutes")
 
-print('Started gathering simple motifs v_indices')
+log_text = f'Finished reading the graph in {int(t.total_seconds())} seconds\nFinished reading the graph in {int(t.total_seconds()/60)} minutes\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
+
 max_to_visit, max_size_of_motif = float('inf'), 10
+log_text = f'Started gathering simple motifs v_indices with max_visits={max_to_visit}, and max_size_of_motif={max_size_of_motif}\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
+
 simple_motifs = find_motifs(graph=g, max_motif_size=max_size_of_motif, max_visited=max_to_visit)
-pickle.dump(simple_motifs, open(os.path.join(ssd_dir_path,
+
+log_text = f'Finished gathering simple motifs v_indices, now dumping pickled dictionary\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
+pickle.dump(simple_motifs, open(os.path.join(LOCAL_RESULTS_PATH,
                                              f"{'all_' if max_to_visit == float('inf') else f'max_{max_to_visit}_'}simple_motifs_max_size_{max_to_visit}"),
                                 'wb'), protocol=5)
 
-print('Finished gathering simple motifs v_indices')
-
+log_text = f'Dumping pickled dictionary finished\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
 
 
 
 motifs_with_properties = {}
-print('Started gathering motifs properties')
+log_text = f'starting to gather motifs properties\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
 for motif_len, motifs_v_indices in tqdm(simple_motifs.items()):
     print(f"gathering motifs' properties with len={motif_len}")
     motifs_with_properties[motif_len] = motifs_with_properties.get(motif_len, []) +\
                                         [get_motif_properties(g, motif_v_indices)
                                          for motif_v_indices in motifs_v_indices]
+log_text = f'Finished gathering motifs properties, now dumping pickled dictionary finished\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
+pickle.dump(motifs_with_properties, open(os.path.join(LOCAL_RESULTS_PATH, f"{'all_' if max_to_visit ==float('inf') else f'max_{max_to_visit}_'}motifs_with_properties_max_size_{max_to_visit}"), 'wb'), protocol=5)
+log_text = f'Finished gathering motifs properties, now dumping pickled dictionary finished\n'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
 
-pickle.dump(motifs_with_properties, open(os.path.join(ssd_dir_path, f"{'all_' if max_to_visit ==float('inf') else f'max_{max_to_visit}_'}motifs_with_properties_max_size_{max_to_visit}"), 'wb'), protocol=5)
-print('DONE')
+
+log_text = f'DONE'
+with open(LOG_file_PATH, 'a') as f:
+    f.write(log_text)
