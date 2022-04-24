@@ -109,6 +109,7 @@ def find_motifs(graph: Graph, max_motif_size: int = 10, max_visited: int = 10 **
 
     return simple_motifs_found
 
+
 def get_motif_properties(graph: Graph, motif_vertices_indices: List[int],
                          edge_properties: Tuple[str] = ('length', 'radii'),
                          vertex_properties: Tuple[str] = ('coordinates', 'coordinates_atlas')):
@@ -132,7 +133,7 @@ def get_motif_properties(graph: Graph, motif_vertices_indices: List[int],
     return motif_edge_properties, motif_vertex_properties
 
 
-ssd_dir_path = f'~/scratch/yishaiaz@auth.ad.bgu.ac.il/{cluster_job_id}'
+ssd_dir_path = f'scratch/yishaiaz@auth.ad.bgu.ac.il/{cluster_job_id}'
 
 ssd_path_to_graph_gt = os.path.join(ssd_dir_path, 'data_graph.gt')
 if os.path.isfile(ssd_path_to_graph_gt):
