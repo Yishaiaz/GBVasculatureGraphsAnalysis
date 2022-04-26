@@ -155,7 +155,7 @@ g = load_graph(ssd_path_to_graph_gt)
 _end = datetime.datetime.now()
 t = _end - _start
 
-log_text = f'Finished reading the graph in {int(t.total_seconds())} seconds\nFinished reading the graph in {int(t.total_seconds()/60)} minutes\n'
+log_text = f'Finished reading the graph in {int(t.total_seconds()/60)} minutes\n or {int(t.total_seconds())} seconds'
 with open(LOG_file_PATH, 'a') as f:
     f.write(log_text)
 
