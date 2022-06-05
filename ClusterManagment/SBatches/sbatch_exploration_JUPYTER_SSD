@@ -21,7 +21,7 @@
 
 ### Print some data to output file ###
 ## test whether deactivating conda environment in the sbatch script is sufficient
-conda deactivate
+##conda deactivate
 ## /test whether deactivating conda environment in the sbatch script is sufficient
 echo `date`
 echo -e "\nSLURM_JOBID:\t\t" $SLURM_JOBID
