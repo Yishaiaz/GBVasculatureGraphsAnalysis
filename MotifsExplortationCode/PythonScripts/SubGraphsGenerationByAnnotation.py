@@ -61,14 +61,14 @@ try:
     print("Attempting to load clearmap annotation module")
     import ClearMap.Alignment.Annotation as ano
     # from ClearMap.Environment import *
-    from ClearMap.Analysis.Graphs.GraphGT import load, Graph
+    from ClearMap.Analysis.Graphs import *
 except ImportError as e:
     print(f"could not import annotation module from clearmap {e}")
     exit(1)
 
 try:
     print("attempting to load entire graph via clearmap API")
-    entire_graph = load(entire_graph_path)
+    entire_graph = GraphGT.load(entire_graph_path)
     print("Finished loading entire graph via clearmap API")
 except Exception as e:
     print(f"ERROR:\n{e}")
