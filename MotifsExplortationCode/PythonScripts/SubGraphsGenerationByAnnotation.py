@@ -96,8 +96,9 @@ try:
         print(f"size of in hierarchy level = {hierarchy_lvl} is {subgraph_by_label.n_vertices()}")
         gt_subgraph_by_label = subgraph_by_label.base
         converted_labels_by_hierarchy[hierarchy_lvl] = converted_all_vs_annotations
-        # gt_subgraph_by_label_path = os.path.join(curr_run_path_to_dir, f"subgraph_hierarchy_lvl_{hierarchy_lvl}_")
-        # gt_subgraph_by_label.save()
+        gt_subgraph_by_label_path = os.path.join(curr_run_path_to_dir_hierarchy, f"subgraph.gt")
+        gt_subgraph_by_label.save(gt_subgraph_by_label_path)
+
     curr_run_path_to_dir_summation_path = os.path.join(curr_run_path_to_dir, curr_date,
                                                        "annotations_by_hierarchy_levels.txt")
     with open(curr_run_path_to_dir_summation_path, 'w') as f:
