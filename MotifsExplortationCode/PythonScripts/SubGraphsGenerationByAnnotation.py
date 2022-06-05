@@ -79,41 +79,46 @@ except Exception as e:
 try:
     print("Attempting to generate subgraphs by vertex annotation labels")
     curr_date = datetime.datetime.now().strftime('%%m_%d_%y')
-    all_vs_annotations = entire_graph.vertex_annotation()
-    converted_labels_by_hierarchy = {}
-    curr_run_path_to_dir = os.path.join(PATH_TO_SUB_GRAPHS_DIR, curr_date)
-    os.makedirs(curr_run_path_to_dir, exist_ok=True)
-    for hierarchy_lvl in [None] + list(range(1, 7)):
-        print(f"processing hierarchy levels: {hierarchy_lvl}")
-        curr_run_path_to_dir_hierarchy = os.path.join(curr_run_path_to_dir, f"hierarchy_{hierarchy_lvl if hierarchy_lvl is not None else 'none'}")
-        os.makedirs(curr_run_path_to_dir_hierarchy, exist_ok=True)
-        converted_all_vs_annotations = ano.convert_label(all_vs_annotations, key='order', value='order',
-                                                         level=hierarchy_lvl)
-        print(f"#converted labels in hierarchy level = {hierarchy_lvl} is {len(converted_all_vs_annotations)}")
-
-        vertex_filter = converted_all_vs_annotations == hierarchy_lvl
-        subgraph_by_label = entire_graph.sub_graph(vertex_filter=vertex_filter)
-        print(f"size of in hierarchy level = {hierarchy_lvl} is {subgraph_by_label.n_vertices()}")
-        gt_subgraph_by_label = subgraph_by_label.base
-        converted_labels_by_hierarchy[hierarchy_lvl] = converted_all_vs_annotations
-        gt_subgraph_by_label_path = os.path.join(curr_run_path_to_dir_hierarchy, f"subgraph.gt")
-        gt_subgraph_by_label.save(gt_subgraph_by_label_path)
-
-    curr_run_path_to_dir_summation_path = os.path.join(curr_run_path_to_dir, curr_date,
-                                                       "annotations_by_hierarchy_levels.txt")
-    with open(curr_run_path_to_dir_summation_path, 'w') as f:
-        json.dump(converted_labels_by_hierarchy, f)
-
-    # v_filters_lvl = {}
-    # for lvl in range(1, 7):
-    #     label_leveled_converted = ano.convert_label(label, key='order', value='order', level=lvl)
-    #     v_filters_lvl[lvl] = label_leveled_converted
-    #     print(f"level={lvl}\nlabels converted:{label_leveled_converted}\n")
+    #############################
+    # for a range of hierarchies:
+    # all_vs_annotations = entire_graph.vertex_annotation()
+    # converted_labels_by_hierarchy = {}
+    # curr_run_path_to_dir = os.path.join(PATH_TO_SUB_GRAPHS_DIR, curr_date)
+    # os.makedirs(curr_run_path_to_dir, exist_ok=True)
+    # for hierarchy_lvl in [None] + list(range(1, 7)):
+    #     print(f"processing hierarchy levels: {hierarchy_lvl}")
+    #     curr_run_path_to_dir_hierarchy = os.path.join(curr_run_path_to_dir, f"hierarchy_{hierarchy_lvl if hierarchy_lvl is not None else 'none'}")
+    #     os.makedirs(curr_run_path_to_dir_hierarchy, exist_ok=True)
+    #     converted_all_vs_annotations = ano.convert_label(all_vs_annotations, key='order', value='order',
+    #                                                      level=hierarchy_lvl)
+    #     print(f"#converted labels in hierarchy level = {hierarchy_lvl} is {len(converted_all_vs_annotations)}")
     #
-    # for lvl, lvl_filter in v_filters_lvl.items():
-    #     vertex_filter = lvl_filter == lvl
+    #     vertex_filter = converted_all_vs_annotations == hierarchy_lvl
+    #     subgraph_by_label = entire_graph.sub_graph(vertex_filter=vertex_filter)
+    #     print(f"size of in hierarchy level = {hierarchy_lvl} is {subgraph_by_label.n_vertices()}")
+    #     gt_subgraph_by_label = subgraph_by_label.base
+    #     converted_labels_by_hierarchy[hierarchy_lvl] = converted_all_vs_annotations
+    #     gt_subgraph_by_label_path = os.path.join(curr_run_path_to_dir_hierarchy, f"subgraph.gt")
+    #     gt_subgraph_by_label.save(gt_subgraph_by_label_path)
+    #
+    # curr_run_path_to_dir_summation_path = os.path.join(curr_run_path_to_dir, curr_date,
+    #                                                    "annotations_by_hierarchy_levels.txt")
+    # with open(curr_run_path_to_dir_summation_path, 'w') as f:
+    #     json.dump(converted_labels_by_hierarchy, f)
 
-    # gs = entire_graph.sub_graph(vertex_filter=vertex_filter)
+    #############################
+    # for a single hierarchy:
+    hierarchy_lvl = 6
+    all_vs_annotations = entire_graph.vertex_annotation()
+    curr_run_path_to_dir = os.path.join(PATH_TO_SUB_GRAPHS_DIR, curr_date)
+    # os.makedirs(curr_run_path_to_dir, exist_ok=True)
+    converted_all_vs_annotations = ano.convert_label(all_vs_annotations, key='order', value='order',
+                                                         level=hierarchy_lvl)
+    print(converted_all_vs_annotations)
+    hierarchy_names = [ano.find(x, key='order')['name'] for x in converted_all_vs_annotations]
+    print(hierarchy_names)
+
+
 except Exception as e:
     print(e)
     exit(1)
