@@ -69,7 +69,7 @@ except ImportError as e:
 
 try:
     print("attempting to load entire graph via clearmap API")
-    entire_graph = GraphGT.load(entire_graph_path)
+    entire_graph = Graphs.GraphGT.load(entire_graph_path)
     print("Finished loading entire graph via clearmap API")
 except Exception as e:
     print(f"ERROR:\n{e}")
