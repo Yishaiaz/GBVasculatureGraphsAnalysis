@@ -38,7 +38,7 @@ echo "######"
 echo "conda available envs:"
 conda info --envs
 echo "######"
-source activate ClearMap				### activate a conda environment, replace my_env with your conda environment
+source activate /home/yishaiaz/anaconda3/envs/ClearMap				### activate a conda environment, replace my_env with your conda environment
 source activate graphToolCondaEnv
 jupyter notebook     				### execute python script – replace with your own command
 #SSD
