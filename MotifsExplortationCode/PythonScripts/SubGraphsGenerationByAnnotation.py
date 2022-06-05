@@ -1,5 +1,4 @@
 import os
-import json
 from graph_tool.all import *
 
 """
@@ -14,8 +13,9 @@ exit codes:
 try:
     with open('job_conf_file.txt', 'r') as f:
         print("FOUND FILE!, the path to the ssd dir is:")
-        configuration_file_dict = json.load(f)
-    ssd_path_to_dir = configuration_file_dict['ssd_path_to_dir']
+        configuration_file_dict = f.readlines()[0]
+    ssd_path_to_dir = configuration_file_dict
+    print(ssd_path_to_dir)
 except FileNotFoundError as e:
     print("could not find file, but here is the cwd listdir")
     print(f"CWD:{os.getcwd()}")
