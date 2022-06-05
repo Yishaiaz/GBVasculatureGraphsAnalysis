@@ -30,11 +30,12 @@ echo -e "SLURM_JOB_NODELIST:\t" $SLURM_JOB_NODELIST "\n\n"
 ### Start your code below ####
 #SSD
 export SLURM_SCRATCH_DIR=/scratch/${SLURM_JOB_USER}/${SLURM_JOBID}
+echo "starting copying raw data to ssd"
 cp ~/GBVasculatureGraphsAnalysis/BrainVasculatureGraphData/*.gt $SLURM_SCRATCH_DIR
+echo "finished copying raw data to ssd"
 echo $SLURM_SCRATCH_DIR
 #/SSD
 module load anaconda				### load anaconda module (must be present when working with conda environments)
-rm job_conf_file.txt
 echo "$SLURM_SCRATCH_DIR" >> job_conf_file.txt
 
 source activate /home/yishaiaz/anaconda3/envs/ClearMap				### activate a conda environment, replace my_env with your conda environment

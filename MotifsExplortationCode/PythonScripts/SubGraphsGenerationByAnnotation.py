@@ -66,7 +66,7 @@ except ImportError as e:
 
 try:
     print("Attempting to generate subgraphs by vertex annotation labels")
-    label = entire_graph.vertex_annotation()
+    # label = entire_graph.vertex_annotation()
     curr_date = datetime.datetime.now().strftime('%%m_%d_%y')
     all_vs_annotations = entire_graph.vp['annotation'].a
 
