@@ -42,5 +42,5 @@ source activate /home/yishaiaz/anaconda3/envs/ClearMap				### activate a conda e
 python ./MotifsExplortationCode/PythonScripts/SubGraphsGenerationByAnnotation.py     				### execute python script – replace with your own command
 rm job_conf_file.txt
 #SSD
-#cp -r $SLURM_SCRATCH_DIR $SLURM_SUBMIT_DIR
+cp -r $SLURM_SCRATCH_DIR $SLURM_SUBMIT_DIR
 #/SSD
