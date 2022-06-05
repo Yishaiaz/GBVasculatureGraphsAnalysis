@@ -89,7 +89,8 @@ try:
         print(f"#converted labels in hierarchy level = {hierarchy_lvl} is {len(converted_all_vs_annotations)}")
 
         vertex_filter = converted_all_vs_annotations == hierarchy_lvl
-        subgraph_by_label = entire_graph.set_vertex_filter(vertex_filter=vertex_filter)
+        subgraph_by_label = entire_graph.sub_graph(vertex_filter=vertex_filter)
+        # subgraph_by_label = entire_graph.set_vertex_filter(vertex_filter=vertex_filter)
         print(f"size of in hierarchy level = {hierarchy_lvl} is {subgraph_by_label.n_vertices()}")
 
     # v_filters_lvl = {}
