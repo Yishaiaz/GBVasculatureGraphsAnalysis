@@ -39,7 +39,7 @@ echo "conda available envs:"
 conda info --envs
 echo "######"
 source activate /home/yishaiaz/anaconda3/envs/ClearMap				### activate a conda environment, replace my_env with your conda environment
-source activate graphToolCondaEnv
+source activate /home/yishaiaz/anaconda3/envs/graphToolCondaEnv
 jupyter notebook     				### execute python script – replace with your own command
 #SSD
 cp -r $SLURM_SCRATCH_DIR $SLURM_SUBMIT_DIR
