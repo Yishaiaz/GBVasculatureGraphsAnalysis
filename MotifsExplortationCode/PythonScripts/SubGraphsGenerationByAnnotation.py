@@ -61,7 +61,7 @@ try:
     print("Attempting to load clearmap annotation module")
     import ClearMap.Alignment.Annotation as ano
     # from ClearMap.Environment import *
-    from ClearMap.Analysis.Graphs import *
+    from ClearMap.Analysis.Graphs import GraphGT
 except ImportError as e:
     print(f"could not import annotation module from clearmap {e}")
     exit(1)
