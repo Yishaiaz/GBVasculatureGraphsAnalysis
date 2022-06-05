@@ -60,26 +60,35 @@ except Exception as e:
 try:
     print("Attempting to load clearmap annotation module")
     import ClearMap.Alignment.Annotation as ano
+    from ClearMap.Environment import *
+    # from ClearMap.Analysis.Graphs.GraphGT import *
 except ImportError as e:
     print(f"could not import annotation module from clearmap {e}")
     exit(1)
 
 try:
-    print("Attempting to generate subgraphs by vertex annotation labels")
-    curr_date = datetime.datetime.now().strftime('%%m_%d_%y')
-    all_vs_annotations = entire_graph.vp['annotation'].a
-
-    for hierarchy_lvl in [None] + list(range(1, 7)):
-        print(f"processing hierarchy levels: {hierarchy_lvl}")
-        curr_run_path_to_dir = os.path.join(PATH_TO_SUB_GRAPHS_DIR, curr_date, f"hierarchy_{hierarchy_lvl if hierarchy_lvl is not None else 'none'}")
-        # os.makedirs(curr_run_path_to_dir, exist_ok=True)
-        converted_all_vs_annotations = ano.convert_label(all_vs_annotations, key='order', value='order',
-                                                         level=hierarchy_lvl)
-        print(f"#converted labels in hierarchy level = {hierarchy_lvl} is {len(converted_all_vs_annotations)}")
-
-        vertex_filter = converted_all_vs_annotations == hierarchy_lvl
-        subgraph_by_label = entire_graph.sub_graph(vertex_filter=vertex_filter)
-        print(f"size of in hierarchy level = {hierarchy_lvl} is {subgraph_by_label.num_vertices()}")
+    print("attempting to load entire graph via clearmap API")
+    entire_graph = grp.load(entire_graph_path)
+    print("Finished loading entire graph via clearmap API")
+except Exception as e:
+    print(f"ERROR:\n{e}")
+    exit(1)
+# try:
+#     print("Attempting to generate subgraphs by vertex annotation labels")
+#     curr_date = datetime.datetime.now().strftime('%%m_%d_%y')
+#     all_vs_annotations = entire_graph.vp['annotation'].a
+#
+#     for hierarchy_lvl in [None] + list(range(1, 7)):
+#         print(f"processing hierarchy levels: {hierarchy_lvl}")
+#         curr_run_path_to_dir = os.path.join(PATH_TO_SUB_GRAPHS_DIR, curr_date, f"hierarchy_{hierarchy_lvl if hierarchy_lvl is not None else 'none'}")
+#         # os.makedirs(curr_run_path_to_dir, exist_ok=True)
+#         converted_all_vs_annotations = ano.convert_label(all_vs_annotations, key='order', value='order',
+#                                                          level=hierarchy_lvl)
+#         print(f"#converted labels in hierarchy level = {hierarchy_lvl} is {len(converted_all_vs_annotations)}")
+#
+#         vertex_filter = converted_all_vs_annotations == hierarchy_lvl
+#         subgraph_by_label = entire_graph.set_vertex_filter(vertex_filter=vertex_filter)
+#         print(f"size of in hierarchy level = {hierarchy_lvl} is {subgraph_by_label.num_vertices()}")
 
     # v_filters_lvl = {}
     # for lvl in range(1, 7):
@@ -91,9 +100,9 @@ try:
     #     vertex_filter = lvl_filter == lvl
 
     # gs = entire_graph.sub_graph(vertex_filter=vertex_filter)
-except Exception as e:
-    print(e)
-    exit(1)
+# except Exception as e:
+#     print(e)
+#     exit(1)
 
 
 
