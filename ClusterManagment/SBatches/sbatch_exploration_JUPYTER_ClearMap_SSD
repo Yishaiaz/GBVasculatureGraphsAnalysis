@@ -34,8 +34,8 @@ cp ~/GBVasculatureGraphsAnalysis/BrainVasculatureGraphData/*.gt $SLURM_SCRATCH_D
 echo $SLURM_SCRATCH_DIR
 #/SSD
 module load anaconda				### load anaconda module (must be present when working with conda environments)
-conda activate ClearMap				### activate a conda environment, replace my_env with your conda environment
-##conda activate graphToolCondaEnv
+source activate ClearMap				### activate a conda environment, replace my_env with your conda environment
+source activate graphToolCondaEnv
 jupyter notebook     				### execute python script – replace with your own command
 #SSD
 cp -r $SLURM_SCRATCH_DIR $SLURM_SUBMIT_DIR
