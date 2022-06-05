@@ -1,8 +1,8 @@
 import os
 import shutil
 import datetime
-from graph_tool.all import *
-
+# from graph_tool.all import *
+import warnings
 """
 exit codes:
 1 - unknown error
@@ -46,29 +46,29 @@ except ImportError as e:
 
 entire_graph_path = os.path.join(ssd_path_to_dir.strip(), 'data_graph.gt')
 
-try:
-    print("Attempting to load entire graph")
-    entire_graph = load_graph(entire_graph_path)
-except FileNotFoundError as e:
-    print(f"File not found at: {entire_graph_path}")
-    exit(113)
-except Exception as e:
-    print(f"Uknown expection occured: {e}")
-    exit(1)
+# try:
+#     print("Attempting to load entire graph")
+#     entire_graph = load_graph(entire_graph_path)
+# except FileNotFoundError as e:
+#     print(f"File not found at: {entire_graph_path}")
+#     exit(113)
+# except Exception as e:
+#     print(f"Uknown expection occured: {e}")
+#     exit(1)
 
 # read vertex annotations
 try:
     print("Attempting to load clearmap annotation module")
     import ClearMap.Alignment.Annotation as ano
-    from ClearMap.Environment import *
-    # from ClearMap.Analysis.Graphs.GraphGT import *
+    # from ClearMap.Environment import *
+    from ClearMap.Analysis.Graphs.GraphGT import *
 except ImportError as e:
     print(f"could not import annotation module from clearmap {e}")
     exit(1)
 
 try:
     print("attempting to load entire graph via clearmap API")
-    entire_graph = grp.load(entire_graph_path)
+    entire_graph = Graph.load(entire_graph_path)
     print("Finished loading entire graph via clearmap API")
 except Exception as e:
     print(f"ERROR:\n{e}")
